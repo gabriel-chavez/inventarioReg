@@ -1,0 +1,25 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @Html.Partial("plantilla/_Header")
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            @Html.Partial("plantilla/_SideMenu")
+            @Html.Partial("plantilla/_TopMenu")            
+            <!-- page content -->
+            <div class="right_col" role="main" id="contenido">
+                @RenderBody()
+            </div>
+            <!-- /page content -->
+            @Html.Partial("plantilla/_Footer")
+            
+           
+        </div>
+    </div>
+    @Html.Partial("plantilla/_Footjs")
+</body>
+</html>

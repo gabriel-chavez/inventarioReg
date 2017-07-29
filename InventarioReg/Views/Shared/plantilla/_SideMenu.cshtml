@@ -1,0 +1,113 @@
+﻿
+<div class="col-md-3 left_col">
+    <div class="left_col scroll-view">
+        <div class="navbar nav_title" style="border: 0;">
+            <a href="#" class="site_title"><i class="fa fa-dribbble"></i> <span>Inventario</span></a>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!-- menu profile quick info -->
+        
+        <!-- /menu profile quick info -->
+
+        <br />
+
+        <!-- sidebar menu -->
+        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+                <h3>General</h3>
+                <ul class="nav side-menu">
+                    <li>
+                        <a><i class="fa fa-home"></i> Inicio <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="#">Principal</a></li>
+                            
+                        </ul>
+                    </li>                    
+                </ul>
+                <!--option 1-->
+                @*@if (sistemainventario.Helper.SessionHelper.existemenu(1, true))
+                {
+                    <ul class="nav side-menu">
+                        <li>
+                            <a><i class="fa fa-wifi"></i> Comunicaciones <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                @if (sistemainventario.Helper.SessionHelper.existemenu(11, false))
+                                {
+                                    <li><a href="~/enlaces">Enlaces de comunicacion</a></li>
+                                }                                
+                            </ul>
+                        </li>
+                    </ul>
+                }                
+                <!--option 2-->
+                @if (sistemainventario.Helper.SessionHelper.existemenu(2, true))
+                {
+                    <ul class="nav side-menu">
+                        <li>
+                            <a><i class="fa fa-check-square-o"></i> Asignacion de Tareas <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                @if (sistemainventario.Helper.SessionHelper.existemenu(21, false))
+                                {
+                                    <li><a href="~/tareas">Tareas</a></li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                }
+                <!--option 3-->
+                @if (sistemainventario.Helper.SessionHelper.existemenu(3, true))
+                {
+                    <ul class="nav side-menu">
+                        <li>
+                            <a><i class="fa fa-hdd-o"></i> Cambios Ingenieria <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                @if (sistemainventario.Helper.SessionHelper.existemenu(31, false))
+                                {
+                                    <li><a href="~/cambiosingenieria">Bandeja</a></li>
+                                }
+                                @if (sistemainventario.Helper.SessionHelper.existemenu(32, false))
+                                {
+                                    <li><a href="~/cambiosingenieria/reportes">Reportes</a></li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                }
+                <!--option adm-->
+                @if (sistemainventario.Helper.SessionHelper.esAdmin())
+                {
+                    <ul class="nav side-menu">
+                        <li>
+                            <a><i class="fa fa-cogs"></i> Admin <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="~/usuarios">Usuarios</a></li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                }*@                
+            </div>
+            
+
+        </div>
+        <!-- /sidebar menu -->
+        <!-- /menu footer buttons 
+        <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+        </div>
+         /menu footer buttons -->
+    </div>
+</div>

@@ -1,0 +1,239 @@
+﻿@model InventarioReg.Models.Items
+@{
+    var oficina = ViewBag.oficina;
+
+}
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Registro de equipos</h3>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Formulario de registro</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+                    @using (Html.BeginForm("Guardar", "", FormMethod.Post, new { @class = "form-horizontal form-label-left", id = "frm-InventarioREgistro", name = "frm-InventarioREgistro" }))
+                    {
+                        @Html.HiddenFor(x => x.IdItem);
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Oficina</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <input type="text" class="form-control" id="nombreOficina" name="nombreOficina" placeholder="" readonly value="@oficina">
+
+                                    <span class="fa fa-university form-control-feedback right" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Tipo de Item</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+
+                                    <select class="form-control" id="IdTipoItem" name="IdTipoItem">
+                                        <option value="1">Equipos de computacion</option>
+                                        <option value="2">Muebles</option>
+                                        <option value="3">Vehiculos</option>
+                                    </select>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Tipo de Item</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+
+                                    <select class="form-control" id="IdTipoItem" name="IdTipoItem">
+                                        <option value="1">Equipos de computacion</option>
+                                        <option value="2">Muebles</option>
+                                        <option value="3">Vehiculos</option>
+                                    </select>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr />
+
+
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Serie</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    @*<input type="text" class="form-control" id="inputSuccess3" placeholder="Ingrese el numero de serie">*@
+                                    @Html.TextBoxFor(xx => xx.Serie, new { @class = "form-control", placeholder = "Ingrese el numero de serie" })
+                                    <span class="fa fa-barcode form-control-feedback right" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Item</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <select id="idNombreActivo" name="idNombreActivo" class="form-control">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Marca</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <select id="IdMarcaActivo" name="IdMarcaActivo" class="form-control">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Modelo</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <select id="IdModeloActivo" name="IdModeloActivo" class="form-control">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Codigo</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    @*<input type="text" class="form-control" id="inputSuccess3" placeholder="Ingrese el codigo">*@
+                                    @Html.TextBoxFor(xx => xx.Codigo, new { @class = "form-control", placeholder = "Ingrese el codigo" })
+                                    <span class="fa fa-qrcode  form-control-feedback right" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Descripcion</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    @Html.TextAreaFor(xx => xx.Descripcion, new { @class = "form-control vresize", placeholder = "Ingrese la descripcion" })
+                                    @*<textarea class="form-control" placeholder="Ingrese la descripcion"></textarea>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div style="text-align:center">
+                                    <button class="btn btn-primary" type="reset" id="limpiarFrmRegistro">Limpiar</button>
+                                    <button type="submit" data-ajax="true" class="btn btn-success">Registrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Equipos agregados<small>Ag.</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <table id="tablaItemsingresados"
+                           data-toolbar="#toolbar2"></table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Equipos<small>Ag. </small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <table id="tablaItemsingresados"
+                           data-toolbar="#toolbar2"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.fn.select2.defaults.set("theme", "bootstrap");
+        $.fn.select2.defaults.set("width", "auto");
+
+
+        $("#idNombreActivo").select2(config);
+        $("#IdMarcaActivo").select2(config2);
+        $("#IdModeloActivo").select2(config3);
+        /********************************************/
+        $("#frm-InventarioREgistro").validate({
+            rules: {
+                idNombreActivo: "required",
+            },
+            messages: {
+                idNombreActivo: "Por favor complete este campo",
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+
+                error.addClass("help-block");
+
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.parent("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+            },
+
+        });
+
+    });
+    $(document).on("change", "#IdTipoItem", function () {
+        $("#idNombreActivo").val('').trigger('change');
+        $("#IdMarcaActivo").val('').trigger('change');
+        $("#IdModeloActivo").val('').trigger('change');
+    })
+    $(document).on("click", "#limpiarFrmRegistro", function () {
+        $("#idNombreActivo").val('').trigger('change');
+        $("#IdMarcaActivo").val('').trigger('change');
+        $("#IdModeloActivo").val('').trigger('change');
+    })
+</script>
