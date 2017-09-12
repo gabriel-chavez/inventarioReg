@@ -16,7 +16,7 @@
             var buttons = $("button", form);
             var button = $(this);
             var url = form.attr('action');
-         //   console.log(form);
+         
             if (button.data('confirm') != undefined) {
                 if (button.data('confirm') == '') {
                     if (!confirm('¿Esta seguro de realizar esta acción?')) return false;
@@ -48,13 +48,15 @@
             // Para los formularios que tengan CKupdate
             if (form.hasClass('CKupdate')) CKupdate();
 
-
+            if (typeof NProgress != 'undefined')
+                NProgress.start();
             form.ajaxSubmit({
                 dataType: 'JSON',
                 type: 'POST',
                 url: url,
                 success: function (r) {
-
+                    if (typeof NProgress != 'undefined')
+                        NProgress.done();
                     block.remove();
                     if (r.response) {
                         if (!button.data('reset') != undefined) {

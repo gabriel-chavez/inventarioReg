@@ -1,0 +1,178 @@
+﻿@{ 
+    dynamic asignados = ViewBag.asignados;
+    dynamic noasignados = ViewBag.noasignados;
+
+}
+ 
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Transferencia</h3>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Equipos oficina<small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  
+                    <table  data-toggle="table"
+                            data-pagination="true"
+                            data-search="true" 
+                            id="tablaEquiposOficina"
+                            data-unique-id="id"
+                            class="hidden"
+                           >
+                        <thead>
+                            <tr>
+                                <th data-field="id" data-visible="false" ></th>
+                                <th data-field="usuario">Usuario</th>
+                                <th data-field="grupo">Grupo</th>
+                                <th data-field="equipo">Equipo</th>
+                                <th data-field="marca">Marca</th>
+                                <th data-field="modelo">Modelo</th>
+                                <th data-field="serie">Serie</th>
+                                <th data-field="codigo">Codigo</th>
+                                <th data-field="oficina">Oficina</th>
+                                <th data-field="area">Area</th>
+                                <th data-field="idItem" data-formatter="actionFormatterTransferencia" data-events="actionEventsTransferencia">Opciones</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var elem in asignados)
+                            {
+                                <tr>
+                                    <td>@elem.id</td>
+                                    <td>@elem.usuario</td>
+                                    <td>@elem.grupo</td>
+                                    <td>@elem.item</td>
+                                    <td>@elem.marca</td>
+                                    <td>@elem.modelo</td>
+                                    <td>@elem.serie</td>
+                                    <td>@elem.codigo</td>
+                                    <td>@elem.oficinas</td>                                    
+                                    <td>@elem.area</td>
+
+                                    <td></td>
+                                </tr>
+                            }
+                            @foreach (var elem in noasignados)
+                            {
+                                <tr>
+                                    <td>@elem.id</td>
+                                    <td>@elem.usuario</td>
+                                    <td>@elem.grupo</td>
+                                    <td>@elem.item</td>
+                                    <td>@elem.marca</td>
+                                    <td>@elem.modelo</td>
+                                    <td>@elem.serie</td>
+                                    <td>@elem.codigo</td>
+                                    <td>@elem.oficinas</td>
+                                    
+                                    <td>@elem.area</td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="">
+    
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Equipos a transferir<small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <table data-toggle="table"
+                           data-pagination="true"
+                           data-search="true"
+                           id="tablaTransferencia"
+                           data-unique-id="id"                           
+                           >
+                        <thead>
+                            <tr>
+                                <th data-field="id" data-visible="false"></th>
+                                <th data-field="usuario">Usuario</th>
+                                <th data-field="grupo">Grupo</th>
+                                <th data-field="equipo">Equipo</th>
+                                <th data-field="marca">Marca</th>
+                                <th data-field="modelo">Modelo</th>
+                                <th data-field="serie">Serie</th>
+                                <th data-field="codigo">Codigo</th>
+                                <th data-field="oficina">Oficina</th>
+                                <th data-field="area">Area</th>
+                                <th data-field="idItem" data-formatter="actionFormatterTransferenciaRetornar" data-events="actionEventsTransferencia">Opciones</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                        </tbody>
+                    </table>
+                    <hr />
+                    <form class="form-horizontal form-label-left ">
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Destino</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <input type="text" class="form-control" placeholder="" value="Reg. El Alto" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Area</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">                                
+                                <select class="form-control">
+                                    <option value="1">Soporte Tecnico</option>
+                                    <option value="2">Administracion Almacen</option>
+                                </select>                                
+                            </div>
+                        </div>
+                        
+                        <div class="clearfix"></div>
+                        <hr />
+                        <div style="text-align:center">
+                            <button class="btn btn-primary" type="reset" id="cancelarTranferencia">Cancelar</button>
+                            <button  class="btn btn-success">Tranferir</button>
+                        </div>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#tablaEquiposOficina").removeClass("hidden")
+    })
+</script>

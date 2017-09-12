@@ -498,13 +498,17 @@
     <Content Include="assets\jszip\lib\zipEntries.js" />
     <Content Include="assets\jszip\lib\zipEntry.js" />
     <Content Include="assets\jszip\vendor\FileSaver.js" />
+    <Content Include="assets\js\ajustes.js" />
+    <Content Include="assets\js\asignacion.js" />
     <Content Include="assets\js\custom.js" />
     <Content Include="assets\js\custom.min.js" />
+    <Content Include="assets\js\edicionGrupos.js" />
     <Content Include="assets\js\funciones.js" />
     <Content Include="assets\js\ini.js" />
     <Content Include="assets\js\registro.js" />
     <Content Include="assets\js\tareas.js" />
     <Content Include="assets\js\tareasingenieria.js" />
+    <Content Include="assets\js\transferencias.js" />
     <Content Include="assets\js\usuarios.js" />
     <Content Include="assets\moment\es.js" />
     <Content Include="assets\moment\moment.min.js" />
@@ -517,9 +521,9 @@
     <Content Include="assets\pdfmake\build\pdfmake.min.js" />
     <Content Include="assets\pdfmake\build\vfs_fonts.js" />
     <Content Include="assets\select2\select2-bootstrap.min.css" />
+    <Content Include="assets\select2\select2.full.js" />
     <Content Include="assets\select2\select2.full.min.js" />
     <Content Include="assets\select2\select2.min.css" />
-    <Content Include="assets\select2\select2.min.js" />
     <Content Include="assets\select\bootstrap-select.min.css" />
     <Content Include="assets\select\bootstrap-select.min.js" />
     <Content Include="assets\summernote\summernote-es-ES.js" />
@@ -541,6 +545,7 @@
     <Content Include="assets\table-boot\plugin\select2.min.css" />
     <Content Include="assets\table-boot\plugin\select2.min.js" />
     <Content Include="assets\validate\jquery.validate.min.js" />
+    <Content Include="assets\vue\vue.min.js" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
@@ -548,9 +553,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AjustesController.cs" />
+    <Compile Include="Controllers\AsignacionController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\TranferenciasController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -570,12 +579,14 @@
     <Compile Include="Models\ModeloActivo.cs" />
     <Compile Include="Models\NombreActivo.cs" />
     <Compile Include="Models\Oficinas.cs" />
+    <Compile Include="Models\OficinasAreas.cs" />
     <Compile Include="Models\Regionales.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\TipoItem.cs" />
     <Compile Include="Models\Tranferencia.cs" />
     <Compile Include="Models\TransferenciaDetalle.cs" />
     <Compile Include="Models\Usuarios.cs" />
+    <Compile Include="Models\PermisoTranferenciasOficina.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -829,6 +840,10 @@
     <Content Include="Views\Inventario\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Inventario\RegistroAsignacion.cshtml" />
+    <Content Include="Views\Asignacion\Index.cshtml" />
+    <Content Include="Views\Asignacion\edicionGrupos.cshtml" />
+    <Content Include="Views\Tranferencias\Index.cshtml" />
+    <Content Include="Views\Ajustes\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -838,6 +853,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\edicionGrupos\" />
+    <Folder Include="Views\Usuarios\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

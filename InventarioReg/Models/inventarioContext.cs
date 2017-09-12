@@ -22,11 +22,15 @@ namespace InventarioReg.Models
         public virtual DbSet<ModeloActivo> ModeloActivo { get; set; }
         public virtual DbSet<NombreActivo> NombreActivo { get; set; }
         public virtual DbSet<Oficinas> Oficinas { get; set; }
+        public virtual DbSet<OficinasAreas> OficinasAreas { get; set; }
         public virtual DbSet<Regionales> Regionales { get; set; }
         public virtual DbSet<TipoItem> TipoItem { get; set; }
         public virtual DbSet<Tranferencia> Tranferencia { get; set; }
         public virtual DbSet<TransferenciaDetalle> TransferenciaDetalle { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
+
+        
+        public virtual DbSet<PermisoTranferenciasOficina> PermisoTranferenciasOficina { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -87,7 +91,7 @@ namespace InventarioReg.Models
                 .Property(e => e.Nombre)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Oficinas>()
+         /*   modelBuilder.Entity<Oficinas>()
                 .HasMany(e => e.Tranferencia)
                 .WithRequired(e => e.Oficinas)
                 .HasForeignKey(e => e.IdOficinaOrigen)
@@ -98,7 +102,7 @@ namespace InventarioReg.Models
                 .WithRequired(e => e.Oficinas1)
                 .HasForeignKey(e => e.IdOficinaDestino)
                 .WillCascadeOnDelete(false);
-
+                */
             modelBuilder.Entity<Regionales>()
                 .Property(e => e.Regional)
                 .IsUnicode(false);
@@ -107,10 +111,10 @@ namespace InventarioReg.Models
                 .Property(e => e.TipoItem1)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<TipoItem>()
+          /*  modelBuilder.Entity<TipoItem>()
                 .HasMany(e => e.Items)
                 .WithRequired(e => e.TipoItem)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(false);*/
 
             modelBuilder.Entity<Tranferencia>()
                 .Property(e => e.Observacion)

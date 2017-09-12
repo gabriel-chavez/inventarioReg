@@ -1,6 +1,7 @@
 ﻿@model InventarioReg.Models.Items
 @{
-    var oficina = ViewBag.oficina;
+    List<InventarioReg.Models.Oficinas> oficinas = ViewBag.oficinas;
+  
 
 }
 <div class="">
@@ -27,16 +28,19 @@
                 </div>
                 <div class="x_content">
                     <br />
-                    @using (Html.BeginForm("Guardar", "", FormMethod.Post, new { @class = "form-horizontal form-label-left", id = "frm-InventarioREgistro", name = "frm-InventarioREgistro" }))
+                    @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal form-label-left", id = "frm-InventarioREgistro", name = "frm-InventarioREgistro" }))
                     {
                         @Html.HiddenFor(x => x.IdItem);
                         <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4 col-xs-12">Oficina</label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                    <input type="text" class="form-control" id="nombreOficina" name="nombreOficina" placeholder="" readonly value="@oficina">
-
-                                    <span class="fa fa-university form-control-feedback right" aria-hidden="true"></span>
+                                    <select class="form-control" id="IdOficina" name="IdOficina">
+                                        @foreach (var item in oficinas)
+                                        {
+                                            <option value="@item.IdOficina">@item.Nombre</option>
+                                        }
+                                    </select>                                    
                                 </div>
                             </div>
                         </div>
@@ -44,36 +48,25 @@
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4 col-xs-12">Tipo de Item</label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">
-
                                     <select class="form-control" id="IdTipoItem" name="IdTipoItem">
                                         <option value="1">Equipos de computacion</option>
                                         <option value="2">Muebles</option>
                                         <option value="3">Vehiculos</option>
                                     </select>
-
-
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                             <div class="form-group">
-                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Tipo de Item</label>
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Area</label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">
-
-                                    <select class="form-control" id="IdTipoItem" name="IdTipoItem">
-                                        <option value="1">Equipos de computacion</option>
-                                        <option value="2">Muebles</option>
-                                        <option value="3">Vehiculos</option>
+                                    <select class="form-control" id="IdArea" name="IdArea">                                        
                                     </select>
-
-
                                 </div>
                             </div>
                         </div>
                         <div class="clearfix"></div>
                         <hr />
-
-
                         <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Serie</label>
@@ -139,7 +132,7 @@
                             <div class="col-xs-12">
                                 <div style="text-align:center">
                                     <button class="btn btn-primary" type="reset" id="limpiarFrmRegistro">Limpiar</button>
-                                    <button type="submit" data-ajax="true" class="btn btn-success">Registrar</button>
+                                    <button type="button" class="btn btn-success" id="agregarREgistrosTabla2">Agregar</button>
                                 </div>
                             </div>
                         </div>
@@ -147,84 +140,167 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-6 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Equipos agregados<small>Ag.</small></h2>
+                    <h2>Equipos agregados<small class="nombreAgenciaRegistro"></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
-
                     </ul>
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content">
-
-                    <table id="tablaItemsingresados"
+                <div class="x_content" id="app">
+                    <table id="tablaItemsAgregados"
                            data-toolbar="#toolbar2"></table>
+                    <hr />
+                    <h6>Datos asignacion (opcional):</h6>
+                    <div class="col-xs-12 form-horizontal form-label-left">
+                        <div class="col-xs-12 form-group has-feedback">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre grupo</label>                                
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <input v-model="nombreGrupo" type="text" class="form-control" id="grupoEquipo" name="grupoEquipo" placeholder="Grupo de equipo">                                    
+                                    @*<span class="fa fa-barcode form-control-feedback right" aria-hidden="true"></span>*@
+                                </div>
+                            </div>
+                        </div>                        
+                        <div v-show="this.nombreGrupo.length>0">
+                            <div class="col-xs-12 form-group has-feedback">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Usuario</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select class="form-control" id="UsuarioGrupo" name="UsuarioGrupo"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 form-group has-feedback">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Observacion</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <input type="text" class="form-control" id="observacion" name="observacion" placeholder="Observacion">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr />
+                    <div style="text-align:center">
+                        <button type="button" class="btn btn-success" id="GuardarRegistros">Guardar registros</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Equipos<small>Ag. </small></h2>
+                    <h2>Equipos<small class="nombreAgenciaRegistro"> </small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
-
                     </ul>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-
-                    <table id="tablaItemsingresados"
+                    <table id="tablaItemsAgenciaAgregados"
                            data-toolbar="#toolbar2"></table>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div id="detalleItem" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Detalle equipo</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal form-label-left">
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Grupo</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <input type="text" v-model="nombreGrupoDetalle" class="form-control" id="nombreGrupoDetalle" name="nombreGrupoDetalle" placeholder="" readonly value="">                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Usuario</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <input type="text" v-model="usuarioDetalle" class="form-control" id="usuarioDetalle" name="usuarioDetalle" placeholder="" readonly value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Observacion</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">                                    
+                                    <textarea v-model="observacionDetalle" id="observacionDetalle" rows="1" name="observacionDetalle" class="form-control" readonly></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="clearfix"></div>
+                    <hr />
+                    <table id="tablaItemsDetalle">                        
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
-<script type="text/javascript">
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            nombreGrupo: '',
+        }
+    });
+    var vm2 = new Vue({
+        el: "#detalleItem",
+        data: {
+            nombreGrupoDetalle: '',
+            usuarioDetalle: '',
+            observacionDetalle: '',
+        }
+    });
     $(document).ready(function () {
         $.fn.select2.defaults.set("theme", "bootstrap");
         $.fn.select2.defaults.set("width", "auto");
-
-
+        // mostrarTablaAgregadosAgencia();
+        
+        agregarAreas();
+        mostrarTablaAgregados();
+        $("#IdOficina").select2();
+        retornarTabla3AsignacionAgencia();
         $("#idNombreActivo").select2(config);
         $("#IdMarcaActivo").select2(config2);
         $("#IdModeloActivo").select2(config3);
-        /********************************************/
-        $("#frm-InventarioREgistro").validate({
-            rules: {
-                idNombreActivo: "required",
-            },
-            messages: {
-                idNombreActivo: "Por favor complete este campo",
-            },
-            errorElement: "em",
-            errorPlacement: function (error, element) {
-
-                error.addClass("help-block");
-
-                if (element.prop("type") === "checkbox") {
-                    error.insertAfter(element.parent("label"));
-                } else {
-                    error.insertAfter(element);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
-            },
-
+        var selectUsuario=$("#UsuarioGrupo").select2(configUsuario);
+        /**********************SOLUCIONA BUG SELECT**********************/
+        var select2_close_block = 0;
+        selectUsuario.on("select2:close", function (e) {
+            if (select2_close_block == 0) {
+                select2_close_block = 1;
+                selectUsuario.select2("open").select2("close");
+                select2_close_block = 0;
+            }
         });
-
+        agregarNombreOficinaBloques();
     });
     $(document).on("change", "#IdTipoItem", function () {
         $("#idNombreActivo").val('').trigger('change');
@@ -236,4 +312,5 @@
         $("#IdMarcaActivo").val('').trigger('change');
         $("#IdModeloActivo").val('').trigger('change');
     })
+    
 </script>

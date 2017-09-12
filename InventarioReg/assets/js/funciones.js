@@ -1,9 +1,14 @@
-﻿// Javascript to enable link to tab
+﻿$(document).ready(function () {
+    $.fn.select2.defaults.set("theme", "bootstrap");
+    $.fn.select2.defaults.set("width", "auto");
+})
+// Javascript to enable link to tab
 var hash = document.location.hash;
 var prefix = "tab_";
 if (hash) {
     $('.nav-tabs a[href="' + hash.replace(prefix, "") + '"]').tab('show');
 }
+
 
 // Change hash for page-reload
 $('.nav-tabs a').on('shown.bs.tab', function (e) {
@@ -144,13 +149,17 @@ function retornarAjax(url)
 }
 function retornarAjaxParametros(url,dataJson) {
     /*****RETORNAR AJAX****************/
-    var content = $(this).closest("#contenido");
+    // var content = $(this).closest("#contenido");
+    var content = $("#contenido");
+    //console.log(content);
     // Creamos un div que bloqueara todo el contenedor
     var block = $('<div class="block-loading" />');
     content.prepend(block);
     // En caso de que haya habido un mensaje de alerta
     $(".alert", content).remove();
-
+    if (typeof NProgress != 'undefined')      
+        NProgress.start();
+         
     $.ajax({
         dataType: 'JSON',
         type: 'POST',
@@ -160,7 +169,8 @@ function retornarAjaxParametros(url,dataJson) {
 
             block.remove();
             // Mostrar mensaje
-
+            if (typeof NProgress != 'undefined')
+                NProgress.done();
             if (r.message != null) {
 
                 if (r.message.length > 0) {
@@ -169,6 +179,7 @@ function retornarAjaxParametros(url,dataJson) {
                     else css = "alert-danger";
 
                     var message = '<div class="alert ' + css + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + r.message + '</div>';
+                    
                     content.prepend(message);
                 }
             }

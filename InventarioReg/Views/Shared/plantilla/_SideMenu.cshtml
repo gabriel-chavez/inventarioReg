@@ -27,20 +27,48 @@
                     </li>                    
                 </ul>
                 <!--option 1-->
-                @*@if (sistemainventario.Helper.SessionHelper.existemenu(1, true))
-                {
+              
                     <ul class="nav side-menu">
                         <li>
-                            <a><i class="fa fa-wifi"></i> Comunicaciones <span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                @if (sistemainventario.Helper.SessionHelper.existemenu(11, false))
-                                {
-                                    <li><a href="~/enlaces">Enlaces de comunicacion</a></li>
-                                }                                
+                            <a><i class="fa fa-cubes "></i> Registro <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">                          
+                                <li><a href="~/inventario">Registro de equipos</a></li>              
+                                <li><a href="~/inventario/RegistroAsignacion">Registro y asignacion</a></li>              
                             </ul>
                         </li>
                     </ul>
-                }                
+                <!--option 2-->
+
+                <ul class="nav side-menu">
+                    <li>
+                        <a><i class="fa fa-random"></i> Asignacion  <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="~/Asignacion/">Asignacion de equipos</a></li>                           
+                            <li><a href="~/Asignacion/edicionGrupos">Edicion de usuarios y grupos</a></li>   
+                        </ul>
+                    </li>
+                </ul>
+                <!--option 3-->
+                <ul class="nav side-menu">
+                    <li>
+                        <a><i class="fa fa-exchange"></i> Tranferencia  <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="~/Tranferencias/">Tranferencia</a></li>
+                       
+                        </ul>
+                    </li>
+                </ul>
+                <!--Ultima-->
+                <ul class="nav side-menu">
+                    <li>
+                        <a><i class="fa fa-cogs"></i> Ajustes  <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="~/Ajustes/">General</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            @*
                 <!--option 2-->
                 @if (sistemainventario.Helper.SessionHelper.existemenu(2, true))
                 {

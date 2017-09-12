@@ -15,7 +15,7 @@ namespace InventarioReg.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public NombreActivo()
         {
-            Items = new HashSet<Items>();
+          //  Items = new HashSet<Items>();
         }
 
         [Key]
@@ -25,9 +25,9 @@ namespace InventarioReg.Models
         public string Nombre { get; set; }
 
         public int? IdTipoItem { get; set; }
-        [JsonIgnore]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]        
-        public virtual ICollection<Items> Items { get; set; }
+      //  [JsonIgnore]
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]        
+       // public virtual ICollection<Items> Items { get; set; }
         /***************************************/
         public static List<NombreActivo> ListaNombre(string nombre, int TipoItem)
         {      

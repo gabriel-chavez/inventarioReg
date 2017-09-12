@@ -115,7 +115,7 @@ namespace InventarioReg.Models
                         _itemsaux = _itemsaux.Where(x => x.FechaRegistro <= fin);
                     }
                     if (_oficina > 0)
-                        _itemsaux = _itemsaux.Where(x => x.IdOficina == _oficina);
+                        _itemsaux = _itemsaux.Where(x => x.IdOficina == _oficina);                 
                     _itemsaux = _itemsaux.OrderByDescending(x => x.FechaRegistro);
                     _items = _itemsaux.ToList();
                 }
@@ -129,5 +129,217 @@ namespace InventarioReg.Models
             }
             return rm;
         }
+        public List<Items> ListarNoAsignados(int _oficina )
+        {
+            List<Items> _items = new List<Items>();
+       //     var rm = new ResponseModel();
+            try
+            {
+                using (var ctx = new inventarioContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = true;
+                    ctx.Configuration.ProxyCreationEnabled = false;
+                    var _itemsaux = ctx.Items
+                                    .Include(x => x.NombreActivo)
+                                    .Include(x => x.MarcaActivo)
+                                    .Include(x => x.ModeloActivo)
+                                    .Include(x => x.TipoItem)
+                                    .Include(x => x.Oficinas)
+                                    .Include(x => x.Areas)
+                                    .Where(x => x.IdEstado == 1)
+                                    .Where(x => x.IdAsignacion == null);
+                    if (_oficina > 0)
+                        _itemsaux = _itemsaux.Where(x => x.IdOficina == _oficina);
+                    _itemsaux = _itemsaux.OrderByDescending(x => x.FechaRegistro);
+                    _items = _itemsaux.ToList();
+                }
+          
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            return _items;
+        }
+        public static List<Items> ListarItemsDetalle(int? _idItem=null,int? _idAsignacion=null)
+        {
+            List<Items> _items = new List<Items>();
+            //     var rm = new ResponseModel();
+            try
+            {
+                using (var ctx = new inventarioContext())
+                {
+                  //  ctx.Configuration.LazyLoadingEnabled = true;
+                    ctx.Configuration.ProxyCreationEnabled = false;                    
+                    var _itemAux= ctx.Items
+                                    .Include(x => x.NombreActivo)
+                                    .Include(x => x.MarcaActivo)
+                                    .Include(x => x.ModeloActivo)
+                                    .Include(x => x.TipoItem)
+                                    .Include(x => x.Oficinas)
+                                    .Include(x => x.Areas)
+                                    .Include(x => x.Asignacion)
+                                    .Where(x => x.IdEstado == 1);
+                    if (_idItem != null)
+                        _itemAux = _itemAux.Where(x => x.IdItem == _idItem);
+                    if (_idAsignacion != null)
+                        _itemAux = _itemAux.Where(x => x.IdAsignacion == _idAsignacion);
+                    _items = _itemAux.ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            return _items;
+        }
+        public static dynamic ListarAsignadosDetalle(int IdOficina)
+        {
+            //List<Items> _items = new List<Items>();            
+            //List<Object> obj = new List<Object>();
+            try
+            {
+                using (var ctx = new inventarioContext())
+                {                    
+                    ctx.Configuration.ProxyCreationEnabled = false;
+                    var query = (from i in ctx.Items
+                                 join a in ctx.Asignacion
+                                 on i.IdAsignacion equals a.IdAsignacion
+                                 join ar in ctx.Areas
+                                 on i.IdArea equals ar.IdArea into xx //para left join
+                                 from areaaux in xx.DefaultIfEmpty()  //para left join
+                                 where (i.IdOficina==IdOficina)
+                                 orderby a.NombreGrupo ascending
+                                 select new
+                                 {
+                                     id = i.IdItem,
+                                     item = i.NombreActivo.Nombre,
+                                     marca = i.MarcaActivo.Marca,
+                                     modelo = i.ModeloActivo.Modelo,
+                                     serie = i.Serie,
+                                     codigo = i.Codigo,
+                                     tipo = i.TipoItem.TipoItem1,
+                                     descripcion = i.Descripcion,
+                                     oficinas = i.Oficinas.Nombre,
+                                     grupo = a.NombreGrupo,
+                                     usuario = a.NombreUsuario,
+                                     observacion = a.Observacion,
+                                     area= areaaux.Area
+                                 }
+                             ).ToList();
+
+                    return query;
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            //return query;
+        }
+        public static dynamic ListarNoAsignadosDetalle(int IdOficina)
+        {
+            //List<Items> _items = new List<Items>();
+            //List<Object> obj = new List<Object>();
+            try
+            {
+                using (var ctx = new inventarioContext())
+                {
+                    ctx.Configuration.ProxyCreationEnabled = false;
+                    var query = (from i in ctx.Items
+                                 join ar in ctx.Areas
+                                 on i.IdArea equals ar.IdArea into xx //para left join
+                                 from areaaux in xx.DefaultIfEmpty()  //para left join
+                                 where (i.IdOficina == IdOficina && i.IdAsignacion == null)
+
+                                 select new
+                                 {
+                                     id = i.IdItem,
+                                     item = i.NombreActivo.Nombre,
+                                     marca = i.MarcaActivo.Marca,
+                                     modelo = i.ModeloActivo.Modelo,
+                                     serie = i.Serie,
+                                     codigo = i.Codigo,
+                                     tipo = i.TipoItem.TipoItem1,
+                                     descripcion = i.Descripcion,
+                                     oficinas = i.Oficinas.Nombre,     
+                                     grupo="-",
+                                     usuario="-",
+                                     observacion="-",
+                                     area = areaaux.Area
+                                 }
+                             ).ToList();
+
+                    return query;
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            //return query;
+        }
+        public static bool desasignarItem(int IdItem)
+        {
+            string sql;
+            try
+            {
+                using (var ctx = new inventarioContext())
+                {
+                    sql = "UPDATE dbo.Items SET IdAsignacion=NULL WHERE IdItem=" + IdItem;
+                    ctx.Database.ExecuteSqlCommand(sql);
+                    return true;      
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+               
+            }
+        }
+        public  bool actualizarAsignacion(int IdItem,int idAsignacion)
+        {
+            string sql;
+            try
+            {
+                using (var ctx = new inventarioContext())
+                {
+                    sql = "UPDATE dbo.Items SET IdAsignacion="+idAsignacion+" WHERE IdItem=" + IdItem;
+                    ctx.Database.ExecuteSqlCommand(sql);
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+
+            }
+        }
+        
+        //public static List<Items> ListarPorGrupo()
+        //{
+        //   // var rm = new ResponseModel();
+        //    var _items = new List<Items>();
+        //    try
+        //    {
+        //        using (var ctx =new inventarioContext())
+        //        {
+        //            ctx.Configuration.LazyLoadingEnabled = true;
+        //            ctx.Configuration.ProxyCreationEnabled = false;
+        //            _items = ctx.Items
+        //                .Include(x => x.Asignacion)
+        //                .Where(x=>x.IdAsignacion>0)
+        //                //.GroupBy(x=>x.IdAsignacion)
+        //                .ToList();
+        //        }
+
+        //    }
+        //    catch (Exception e)
+        //    {
+
+        //        throw;
+        //    }
+        //    return (_items);
+        //}
     }
 }

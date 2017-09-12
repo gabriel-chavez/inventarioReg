@@ -28,6 +28,34 @@ namespace sistemainventario.Helper
         {
             FormsAuthentication.SignOut();
         }
+        public static Usuarios ObtenerUsuarioSession()
+        {
+            var usr = new Usuarios();
+
+            if (HttpContext.Current.User != null && HttpContext.Current.User.Identity is FormsIdentity)
+            {
+                FormsAuthenticationTicket ticket = ((FormsIdentity)HttpContext.Current.User.Identity).Ticket;
+                if (ticket != null)
+                {
+                    var serializer = new JavaScriptSerializer();
+                    serializer.RegisterConverters(new[] { new DynamicJsonConverter() });
+                    dynamic obj = serializer.Deserialize(ticket.UserData, typeof(object));
+                    usr.IdUsuario = Convert.ToInt32(obj.Data.IdUsuario);
+                    usr.Nombre = obj.Data.Nombre;
+                    usr.Correo = obj.Data.Correo;
+                    usr.Usuario = obj.Data.Usuario;
+                    usr.Roles = obj.Data.Roles;
+                    usr.Cargo = obj.Data.Cargo;
+                    usr.Imagen = obj.Data.Imagen;
+                    usr.Estado = obj.Data.Estado;
+                    usr.Tipo = obj.Data.Tipo;
+                    usr.Regional = obj.Data.Regional;
+                    usr.IdOficina = obj.Data.IdOficina;
+                }
+            }
+            //return id;
+            return usr;
+        }
         public static string GetUser()
         {
             //int user_id = 0;
@@ -96,6 +124,7 @@ namespace sistemainventario.Helper
         {
             //JsonResult datos1 = Json(datos.Data);
             string json = JsonConvert.SerializeObject(datos);
+           // string json = datos.ToString();
             bool persist = true;
             var cookie = FormsAuthentication.GetAuthCookie("usuario", persist);
 

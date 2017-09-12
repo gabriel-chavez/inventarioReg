@@ -1,20 +1,26 @@
 namespace InventarioReg.Models
 {
     using Proyecto.Models;
+    using sistemainventario.Helper;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity;
     using System.Data.Entity.Spatial;
+    using System.IO;
     using System.Linq;
+    using System.Web.Mvc;
+    using System.Web.Script.Serialization;
+
+
 
     public partial class Usuarios
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Usuarios()
         {
-            Asignacion = new HashSet<Asignacion>();
+            //Asignacion = new HashSet<Asignacion>();
             Items = new HashSet<Items>();
             Tranferencia = new HashSet<Tranferencia>();
         }
@@ -40,9 +46,9 @@ namespace InventarioReg.Models
         public int? Estado { get; set; }
         public int? Tipo { get; set; }
         public int? Regional { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Asignacion> Asignacion { get; set; }
+        public int? IdOficina { get; set; }
+     //   [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+   //     public virtual ICollection<Asignacion> Asignacion { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Items> Items { get; set; }
@@ -153,5 +159,6 @@ namespace InventarioReg.Models
             }
             return rm;
         }
+       
     }
 }
